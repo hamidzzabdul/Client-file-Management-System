@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { z } from "zod";
 
 import { useForm } from "react-hook-form";
@@ -12,7 +12,7 @@ const loginSchema = z.object({
 });
 
 const Login = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   // const [serverError, setServerError] = useState("");
 
   const {
@@ -27,6 +27,7 @@ const Login = () => {
     try {
       const res = await authApi.login(data);
       console.log("login successfull", res);
+      navigate("/dashboard");
     } catch (err) {
       console.log(err);
     }
