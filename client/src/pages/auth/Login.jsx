@@ -5,6 +5,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import authApi from "../../api/authApi";
+import useAuth from "../../context/AuthContext";
+import toast from "react-hot-toast";
 
 const loginSchema = z.object({
   email: z.string().min(1, "Email is required").email("Invalid email address"),
@@ -14,6 +16,7 @@ const loginSchema = z.object({
 const Login = () => {
   const navigate = useNavigate();
   // const [serverError, setServerError] = useState("");
+  const { login } = useAuth();
 
   const {
     register,
@@ -26,9 +29,12 @@ const Login = () => {
   const onsubmit = async (data) => {
     try {
       const res = await authApi.login(data);
-      console.log("login successfull", res);
+      login(res.data.user, res.token);
+      console.log(res.data.user);
+      toast.success(`Succefully logged in ${res.data.user.name}`);
       navigate("/dashboard");
     } catch (err) {
+      toast.error(err.response?.data?.message || "Invalid email or password");
       console.log(err);
     }
   };

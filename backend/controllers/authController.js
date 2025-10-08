@@ -41,6 +41,11 @@ exports.createUsers = catchAsync(async (req, res, next) => {
     email: req.body.email,
     password: req.body.password,
     role: req.body.role,
+    phoneNumber: req.body.phoneNumber,
+    businessType: req.body.businessType,
+    address: req.body.address,
+    city: req.body.city,
+    description: req.body.description,
     passwordConfirm: req.body.passwordConfirm,
   });
   createSendToken(newUser, 201, res);
@@ -80,23 +85,23 @@ exports.protect = catchAsync(async (req, res, next) => {
       new appError("The user belonging to this token does no longer exist", 401)
     );
   }
-  if (currentUser.changedPasswordAfter(decoded.iat)) {
-    return next(
-      new appError("User recently changed password! Please log in again", 401)
-    );
-  }
+  // if (currentUser.changedPasswordAfter(decoded.iat)) {
+  //   return next(
+  //     new appError("User recently changed password! Please log in again", 401)
+  //   );
+  // }
   req.user = currentUser;
   next();
 });
 
 exports.restrictTo = (...roles) => {
   return (req, res, next) => {
+    console.log(req.user);
     if (!roles.includes(req.user.role)) {
       return next(
-        new AppError("You do not have permission to perform this action", 403)
+        new appError("You do not have permission to perform this action", 403)
       );
     }
-
     next();
   };
 };

@@ -6,6 +6,10 @@ import ManageClients from "./pages/dashboard/ManageClients";
 import MyFiles from "./pages/dashboard/MyFiles";
 import Profile from "./pages/dashboard/Profle";
 import DashboardLayout from "./components/Dashboard/DashboardLayout";
+import CreateClient from "./pages/dashboard/CreateClient";
+
+import { Toaster } from "react-hot-toast";
+
 const Router = createBrowserRouter([
   {
     path: "/",
@@ -25,6 +29,10 @@ const Router = createBrowserRouter([
         element: <ManageClients />,
       },
       {
+        path: "create-clients",
+        element: <CreateClient />,
+      },
+      {
         path: "my-files", //clients can see their files and manage them
         element: <MyFiles />,
       },
@@ -37,7 +45,12 @@ const Router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={Router} />;
+  return (
+    <>
+      <Toaster position="top-right" reverseOrder={false} />
+      <RouterProvider router={Router} />;
+    </>
+  );
 }
 
 export default App;

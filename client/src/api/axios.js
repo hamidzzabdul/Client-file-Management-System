@@ -8,9 +8,16 @@ const api = axios.create({
   },
 });
 
-api.interceptors.response.use((config) => {
-  const token = localStorage.getItem("token");
-  if (token) config.headers.Authorization = `Bearer ${token}`;
+api.interceptors.request.use((config) => {
+  const storedAuth = localStorage.getItem("auth");
+  if (storedAuth) {
+    const token = JSON.parse(storedAuth).token;
+    console.log(token);
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+  }
+
   return config;
 });
 

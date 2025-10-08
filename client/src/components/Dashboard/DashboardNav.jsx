@@ -2,11 +2,11 @@ import React from "react";
 
 const DashboardNav = () => {
   return (
-    <div className="w-full h-[4rem] bg-white flex items-center justify-between px-8">
-      <h2 className="text-base font-semibold">Welcome Admin</h2>
+    <div className="w-full h-[4rem] py-[2rem] bg-white flex items-center justify-between px-8 sticky top-0 z-10">
+      <h2 className="text-lg font-semibold">Welcome Admin</h2>
 
       <div className="flex items-center gap-2">
-        <div className="w-[30px] h-[30px] rounded-md bg-blue-800 flex items-center justify-center px-2 py-1 ">
+        <div className="w-[30px] h-[30px] rounded-md bg-blue-800 flex items-center justify-center px-2 py-1">
           <p className="text-white text-sm font-semibold">A</p>
         </div>
         <div className="flex items-center flex-col gap-2 cursor-pointer">

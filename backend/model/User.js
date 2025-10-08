@@ -15,23 +15,43 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     validate: [validator.isEmail, "Please provide a valid email"],
   },
+  phoneNumber: {
+    type: String,
+    required: [true, "User must have a phone number"],
+  },
+  businessType: {
+    type: String,
+    required: [true, "User must have a business type"],
+  },
+  address: {
+    type: String,
+    required: [true, "User must have a physical address"],
+  },
+  city: {
+    type: String,
+    required: [true, "User must have a city"],
+  },
+  description: {
+    type: String,
+    required: [true, "User must have a description"],
+  },
   password: {
     type: String,
     required: [true, "User must have a password"],
     minlength: 8,
     select: false,
   },
-  passwordConfirm: {
-    type: String,
-    required: [true, "Please confirm your password"],
-    validate: {
-      // This only works on CREATE and SAVE!!!
-      validator: function (el) {
-        return el === this.password;
-      },
-      message: "Passwords are not the same!",
-    },
-  },
+  // passwordConfirm: {
+  //   type: String,
+  //   required: [true, "Please confirm your password"],
+  //   validate: {
+  //     // This only works on CREATE and SAVE!!!
+  //     validator: function (el) {
+  //       return el === this.password;
+  //     },
+  //     message: "Passwords are not the same!",
+  //   },
+  // },
   role: {
     type: String,
     enum: ["client", "admin"],

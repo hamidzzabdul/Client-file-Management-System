@@ -4,7 +4,12 @@ const userController = require("../controllers/userController");
 
 const router = express.Router();
 
-router.post("/signup", authController.protect, authController.createUsers);
+router.post(
+  "/create-user",
+  authController.protect,
+  authController.restrictTo("admin"),
+  authController.createUsers
+);
 router.post("/login", authController.login);
 
 // router.post('/forgotPassword', authController.forgotPassword);

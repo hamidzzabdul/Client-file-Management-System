@@ -1,5 +1,12 @@
 import { NavLink } from "react-router-dom";
-import { Files, LayoutDashboard, LogOut, User, Users } from "lucide-react";
+import {
+  Files,
+  LayoutDashboard,
+  LogOut,
+  Plus,
+  User,
+  Users,
+} from "lucide-react";
 const menuItems = [
   {
     icon: <LayoutDashboard className="w-[23px] font-semibold" />,
@@ -11,6 +18,12 @@ const menuItems = [
     icon: <Users className="w-[23px] font-semibold" />,
     label: "Manage Clients",
     href: "/dashboard/manage-clients",
+    visible: ["admin"],
+  },
+  {
+    icon: <Plus className="w-[23px] font-semibold" />,
+    label: "Create Client",
+    href: "/dashboard/create-clients",
     visible: ["admin"],
   },
   {
