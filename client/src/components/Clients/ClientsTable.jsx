@@ -1,9 +1,10 @@
-import { ChevronDown, Eye, Pencil, Plus, Search, Trash2 } from "lucide-react";
-import SearchClient from "../SearchClient";
+import { Eye, Pencil, Plus, Search, Trash2 } from "lucide-react";
 
 import Table from "../Table";
+import useClients from "../../hooks/useClients";
 
 const ClientsTable = () => {
+  const { clients, loading, error } = useClients();
   // Define columns for the table
   const columns = [
     { header: "#", accessor: "number" },
@@ -12,24 +13,6 @@ const ClientsTable = () => {
     { header: "Date Created", accessor: "date" },
     { header: "Status", accessor: "status" },
     { header: "Actions", accessor: "actions" },
-  ];
-
-  // Mock data (replace later with API data)
-  const data = [
-    {
-      number: 1,
-      client: "John Doe",
-      email: "john.doe@example.com",
-      date: "2025-10-08",
-      status: "Active",
-    },
-    {
-      number: 2,
-      client: "Jane Smith",
-      email: "jane.smith@example.com",
-      date: "2025-10-08",
-      status: "Pending",
-    },
   ];
 
   // Render each row
@@ -69,8 +52,19 @@ const ClientsTable = () => {
       </td>
     </>
   );
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center py-10">
+        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
 
-  return <Table columns={columns} data={data} renderRow={renderRow} />;
+  if (error) {
+    return <div className="text-center text-red-500 py-10">{error}</div>;
+  }
+
+  return <Table columns={columns} data={clients} renderRow={renderRow} />;
 };
 
 export default ClientsTable;

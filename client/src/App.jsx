@@ -35,6 +35,7 @@ const Router = createBrowserRouter([
       {
         path: "my-files", //clients can see their files and manage them
         element: <MyFiles />,
+        children: [{ path: "create-files", element: <div>Create files</div> }],
       },
       {
         path: "my-profile",

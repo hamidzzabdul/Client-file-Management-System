@@ -12,7 +12,6 @@ api.interceptors.request.use((config) => {
   const storedAuth = localStorage.getItem("auth");
   if (storedAuth) {
     const token = JSON.parse(storedAuth).token;
-    console.log(token);
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

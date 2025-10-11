@@ -57,6 +57,10 @@ const userSchema = new mongoose.Schema({
     enum: ["client", "admin"],
     default: "client",
   },
+  createdAt: {
+    type: Date,
+    default: Date.now(),
+  },
 });
 
 userSchema.pre("save", async function (next) {

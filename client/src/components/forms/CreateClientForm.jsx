@@ -4,32 +4,37 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CreateClientSchema } from "../../schemas/CreateClietnSchema";
 import userApi from "../../api/userApi";
+import { toast } from "react-hot-toast";
 
 const CreateClientForm = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState(null);
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-    // reset,
+    reset,
   } = useForm({
     resolver: zodResolver(CreateClientSchema),
   });
 
   const onSubmit = async (data) => {
     try {
-      setLoading(true);
-      setMessage(null);
-      console.log(data);
-
-      const res = await userApi.create(data);
-      console.log(res);
-      // reset();
+      await userApi.create(data);
+      toast.success("Client created Succesfully");
+      reset();
     } catch (error) {
       console.log(error);
+      // If error is from the backend with a message
+      // if (
+      //   error.response &&
+      //   error.response.data &&
+      //   error.response.data.message
+      // ) {
+      //   toast.error(error.response.data.message);
+      // } else {
+      //   toast.error("Something went wrong. Please try again.");
+      // }
     }
   };
 

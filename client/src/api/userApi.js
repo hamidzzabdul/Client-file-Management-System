@@ -1,5 +1,4 @@
 import api from "./axios";
-import authApi from "./authApi";
 
 const getToken = () => {
   const storedAuth = localStorage.getItem("auth");

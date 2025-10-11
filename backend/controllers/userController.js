@@ -13,13 +13,15 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
   const users = await User.find();
 
   // SEND RESPONSE
-  res.status(200).json({
-    status: "success",
-    results: users.length,
-    data: {
-      users,
-    },
-  });
+  setTimeout(() => {
+    res.status(200).json({
+      status: "success",
+      results: users.length,
+      data: {
+        users,
+      },
+    });
+  }, 1000);
 });
 
 exports.updateMe = catchAsync(async (req, res, next) => {

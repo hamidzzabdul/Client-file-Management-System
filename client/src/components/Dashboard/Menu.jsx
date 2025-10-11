@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   Files,
   LayoutDashboard,
@@ -7,6 +7,8 @@ import {
   User,
   Users,
 } from "lucide-react";
+import { getStoredUser } from "../../utils/authHelper";
+import authApi from "../../api/authApi";
 const menuItems = [
   {
     icon: <LayoutDashboard className="w-[23px] font-semibold" />,
@@ -30,7 +32,7 @@ const menuItems = [
     icon: <Files className="w-[23px] font-semibold" />,
     label: "Files",
     href: "/dashboard/my-files",
-    visible: ["client"],
+    visible: ["admin", "client"],
   },
   {
     icon: <User className="w-[23px] font-semibold" />,
@@ -38,27 +40,39 @@ const menuItems = [
     href: "/dashboard/my-profile",
     visible: ["admin", "client"],
   },
-  {
-    icon: <LogOut className="w-[23px] font-semibold" />,
-    label: "Logout",
-    href: "/logout",
-    visible: ["admin", "client"],
-  },
 ];
 
 const Menu = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    authApi.logout();
+    navigate("/");
+  };
+  const user = getStoredUser();
+  const filteredMenu = menuItems.filter((item) =>
+    item.visible.includes(user.role)
+  );
   return (
     <div className=" mt-8 text-sm flex flex-col gap-5 ">
-      {menuItems.map((item) => (
+      {filteredMenu.map((item) => (
         <NavLink
+          key={item.href}
           to={item.href}
-          key={item.label}
           className="flex items-center justify-center lg:justify-start gap-2 text-gray-500 hover:text-gray-900 transition duration-300 py-2 md-px-2 rounded-md hover:bg-lamaSkyLight"
         >
           {item.icon}
           <span className="hidden lg:block ">{item.label}</span>
         </NavLink>
       ))}
+      <div
+        to={"/logout"}
+        className="flex items-center justify-center lg:justify-start gap-2 text-gray-500 hover:text-gray-900 transition duration-300 py-2 md-px-2 rounded-md hover:bg-lamaSkyLight cursor-pointer"
+        onClick={handleLogout}
+      >
+        <LogOut className="w-[23px] font-semibold" />{" "}
+        <span className="hidden lg:block ">Logout</span>
+      </div>
     </div>
   );
 };
