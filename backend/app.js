@@ -5,6 +5,7 @@ const cookieParser = require("cookie-parser");
 
 // Routes imports
 const userRouter = require("./routes/userRoute");
+const fileRouter = require("./routes/fiileRoute");
 const globalErrorHandler = require("./controllers/errorController");
 const AppError = require("./utils/appError");
 
@@ -17,10 +18,12 @@ app.use(
 );
 app.use(express.json({ limit: "10kb" }));
 app.use(express.urlencoded({ extended: true, limit: "10kb" }));
+
 app.use(cookieParser());
 
 //routes
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/files", fileRouter);
 
 // app.all("*", (req, res, next) => {
 //   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
