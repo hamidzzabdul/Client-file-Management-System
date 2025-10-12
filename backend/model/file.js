@@ -6,7 +6,6 @@ const fileSchema = new mongoose.Schema(
     name: {
       type: String,
       required: [true, "File Title is Required"],
-      unique: true,
       trim: true,
     },
     description: {

@@ -13,6 +13,10 @@ const fileApi = {
     });
     return data;
   },
+  getAll: async () => {
+    const { data } = await api.get("/files");
+    return data;
+  },
 };
 
 export default fileApi;

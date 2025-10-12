@@ -18,7 +18,7 @@ tmp/
 # Backend
 # ==============================
 backend/node_modules/
-backend/.env
+backend/config.env
 backend/package-lock.json
 
 # Logs

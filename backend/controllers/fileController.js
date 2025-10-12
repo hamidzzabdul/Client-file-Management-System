@@ -26,12 +26,18 @@ exports.createFile = catchAsync(async (req, res, next) => {
     );
   }
 
-  // Upload to Cloudinary
-  const uploadResult = await uploadToCloudinary(req.file.buffer, "myAppFiles");
   const ext = path
     .extname(req.file.originalname)
     .replace(".", "")
     .toLowerCase();
+  // Upload to Cloudinary
+  const publicId = `${req.body.name}.${ext}`;
+
+  const uploadResult = await uploadToCloudinary(
+    req.file.buffer,
+    "myAppFiles",
+    publicId
+  );
 
   const file = await File.create({
     name: req.body.name,
@@ -51,7 +57,9 @@ exports.createFile = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllFiles = catchAsync(async (req, res, next) => {
-  const files = await File.find();
+  const files = await File.find()
+    .populate("uploadedBy", "name email")
+    .sort({ createdAt: -1 });
   res.status(200).json({
     status: "success",
     data: {
